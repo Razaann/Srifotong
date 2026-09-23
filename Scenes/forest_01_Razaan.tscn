@@ -1,0 +1,370 @@
+[gd_scene format=4 uid="uid://bfruii4l85lsx"]
+
+[ext_resource type="Script" uid="uid://ckdx37yspeyoo" path="res://Scripts/player.gd" id="1_724hn"]
+[ext_resource type="Script" uid="uid://bkugw64w766h" path="res://Scripts/scene_portal.gd" id="2_724hn"]
+[ext_resource type="Texture2D" uid="uid://dwjqgan6gixji" path="res://Asset/Adventure Character 16x16/Boy_Adventure C.png" id="2_alpks"]
+[ext_resource type="TileSet" uid="uid://d2y5k578vn7n8" path="res://Data/forest_tile_set.tres" id="3_alpks"]
+
+[sub_resource type="CapsuleShape2D" id="cap"]
+radius = 4.0
+height = 12.0
+
+[sub_resource type="AtlasTexture" id="a0"]
+atlas = ExtResource("2_alpks")
+region = Rect2(0, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="a1"]
+atlas = ExtResource("2_alpks")
+region = Rect2(48, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="a2"]
+atlas = ExtResource("2_alpks")
+region = Rect2(96, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="a3"]
+atlas = ExtResource("2_alpks")
+region = Rect2(144, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="a4"]
+atlas = ExtResource("2_alpks")
+region = Rect2(192, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="a5"]
+atlas = ExtResource("2_alpks")
+region = Rect2(240, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="a6"]
+atlas = ExtResource("2_alpks")
+region = Rect2(288, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="a7"]
+atlas = ExtResource("2_alpks")
+region = Rect2(336, 240, 48, 48)
+
+[sub_resource type="AtlasTexture" id="b0"]
+atlas = ExtResource("2_alpks")
+region = Rect2(0, 288, 48, 48)
+
+[sub_resource type="AtlasTexture" id="b1"]
+atlas = ExtResource("2_alpks")
+region = Rect2(48, 288, 48, 48)
+
+[sub_resource type="AtlasTexture" id="b2"]
+atlas = ExtResource("2_alpks")
+region = Rect2(96, 288, 48, 48)
+
+[sub_resource type="AtlasTexture" id="b3"]
+atlas = ExtResource("2_alpks")
+region = Rect2(144, 288, 48, 48)
+
+[sub_resource type="AtlasTexture" id="b4"]
+atlas = ExtResource("2_alpks")
+region = Rect2(192, 288, 48, 48)
+
+[sub_resource type="AtlasTexture" id="b5"]
+atlas = ExtResource("2_alpks")
+region = Rect2(240, 288, 48, 48)
+
+[sub_resource type="AtlasTexture" id="b6"]
+atlas = ExtResource("2_alpks")
+region = Rect2(288, 288, 48, 48)
+
+[sub_resource type="AtlasTexture" id="b7"]
+atlas = ExtResource("2_alpks")
+region = Rect2(336, 288, 48, 48)
+
+[sub_resource type="AtlasTexture" id="i0"]
+atlas = ExtResource("2_alpks")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="i1"]
+atlas = ExtResource("2_alpks")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="i2"]
+atlas = ExtResource("2_alpks")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="i3"]
+atlas = ExtResource("2_alpks")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="i4"]
+atlas = ExtResource("2_alpks")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="i5"]
+atlas = ExtResource("2_alpks")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="j0"]
+atlas = ExtResource("2_alpks")
+region = Rect2(0, 144, 48, 48)
+
+[sub_resource type="AtlasTexture" id="j1"]
+atlas = ExtResource("2_alpks")
+region = Rect2(48, 144, 48, 48)
+
+[sub_resource type="AtlasTexture" id="j2"]
+atlas = ExtResource("2_alpks")
+region = Rect2(96, 144, 48, 48)
+
+[sub_resource type="AtlasTexture" id="j3"]
+atlas = ExtResource("2_alpks")
+region = Rect2(144, 144, 48, 48)
+
+[sub_resource type="AtlasTexture" id="r0"]
+atlas = ExtResource("2_alpks")
+region = Rect2(0, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="r1"]
+atlas = ExtResource("2_alpks")
+region = Rect2(48, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="r2"]
+atlas = ExtResource("2_alpks")
+region = Rect2(96, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="r3"]
+atlas = ExtResource("2_alpks")
+region = Rect2(144, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="r4"]
+atlas = ExtResource("2_alpks")
+region = Rect2(192, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="r5"]
+atlas = ExtResource("2_alpks")
+region = Rect2(240, 48, 48, 48)
+
+[sub_resource type="SpriteFrames" id="sf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("a0")
+}, {
+"duration": 1.0,
+"texture": SubResource("a1")
+}, {
+"duration": 1.0,
+"texture": SubResource("a2")
+}, {
+"duration": 1.0,
+"texture": SubResource("a3")
+}],
+"loop": 0,
+"name": &"attack1",
+"speed": 16.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("a4")
+}, {
+"duration": 1.0,
+"texture": SubResource("a5")
+}, {
+"duration": 1.0,
+"texture": SubResource("a6")
+}, {
+"duration": 1.0,
+"texture": SubResource("a7")
+}],
+"loop": 0,
+"name": &"attack2",
+"speed": 16.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("b0")
+}, {
+"duration": 1.0,
+"texture": SubResource("b1")
+}, {
+"duration": 1.0,
+"texture": SubResource("b2")
+}, {
+"duration": 1.0,
+"texture": SubResource("b3")
+}],
+"loop": 0,
+"name": &"attack3",
+"speed": 16.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("b4")
+}, {
+"duration": 1.0,
+"texture": SubResource("b5")
+}, {
+"duration": 1.0,
+"texture": SubResource("b6")
+}, {
+"duration": 1.0,
+"texture": SubResource("b7")
+}],
+"loop": 0,
+"name": &"attack4",
+"speed": 16.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("i0")
+}, {
+"duration": 1.0,
+"texture": SubResource("i1")
+}, {
+"duration": 1.0,
+"texture": SubResource("i2")
+}, {
+"duration": 1.0,
+"texture": SubResource("i3")
+}, {
+"duration": 1.0,
+"texture": SubResource("i4")
+}, {
+"duration": 1.0,
+"texture": SubResource("i5")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("j0")
+}, {
+"duration": 1.0,
+"texture": SubResource("j1")
+}, {
+"duration": 1.0,
+"texture": SubResource("j2")
+}, {
+"duration": 1.0,
+"texture": SubResource("j3")
+}],
+"loop": 1,
+"name": &"jump",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("r0")
+}, {
+"duration": 1.0,
+"texture": SubResource("r1")
+}, {
+"duration": 1.0,
+"texture": SubResource("r2")
+}, {
+"duration": 1.0,
+"texture": SubResource("r3")
+}, {
+"duration": 1.0,
+"texture": SubResource("r4")
+}, {
+"duration": 1.0,
+"texture": SubResource("r5")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="melee"]
+size = Vector2(20, 16)
+
+[sub_resource type="StyleBoxFlat" id="pbg"]
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+bg_color = Color(1, 1, 1, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.1, 0.2, 0.4, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="RectangleShape2D" id="portal"]
+size = Vector2(60, 120)
+
+[node name="Forest01" type="Node2D" unique_id=885796004]
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1390742821]
+top_level = true
+position = Vector2(128, -42)
+script = ExtResource("1_724hn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=227336137]
+position = Vector2(0, -12)
+shape = SubResource("cap")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player" unique_id=745749226]
+texture_filter = 1
+position = Vector2(0, -14)
+sprite_frames = SubResource("sf")
+animation = &"run"
+autoplay = "idle"
+
+[node name="MeleeHitbox" type="Area2D" parent="Player" unique_id=239323842]
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/MeleeHitbox" unique_id=100746369]
+position = Vector2(14, -14)
+shape = SubResource("melee")
+
+[node name="BubbleLayer" type="CanvasLayer" parent="Player" unique_id=283070195]
+layer = 5
+
+[node name="Bubble" type="PanelContainer" parent="Player/BubbleLayer" unique_id=1014052750]
+visible = false
+offset_right = 150.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("pbg")
+
+[node name="VBox" type="VBoxContainer" parent="Player/BubbleLayer/Bubble" unique_id=191330792]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Player/BubbleLayer/Bubble/VBox" unique_id=1818306864]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.15, 0.3, 0.6, 1)
+theme_override_font_sizes/font_size = 8
+text = "Pemuda"
+
+[node name="Text" type="Label" parent="Player/BubbleLayer/Bubble/VBox" unique_id=1726055424]
+custom_minimum_size = Vector2(230, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.1, 0.1, 0.15, 1)
+theme_override_font_sizes/font_size = 9
+text = "..."
+autowrap_mode = 2
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=988381433]
+position = Vector2(0, -40)
+zoom = Vector2(1.5, 1.5)
+limit_enabled = false
+limit_left = 0
+limit_top = -400
+limit_bottom = 200
+limit_smoothed = true
+
+[node name="PortalBack" type="Area2D" parent="." unique_id=462104148]
+position = Vector2(0, -156)
+script = ExtResource("2_724hn")
+target_scene = "res://Scenes/village_edit.tscn"
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PortalBack" unique_id=276810768]
+shape = SubResource("portal")
+disabled = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1867494038]
+position = Vector2(-128, 0)
+tile_map_data = PackedByteArray("AAAIAP//AAAAAAIAAAAIAP7/AAAAAAEAAAAIAP3/AAAAAAEAAAAIAPz/AAAAAAEAAAAIAPv/AAAAAAEAAAAIAPr/AAAAAAEAAAAIAPn/AAAAAAEAAAAIAPj/AAAAAAEAAAAIAPf/AAAAAAAAAAAJAPf/AAABAAAAAAAKAPf/AAABAAAAAAALAPf/AAABAAAAAAAMAPf/AAABAAAAAAANAPf/AAABAAAAAAAOAPf/AAABAAAAAAAPAPf/AAABAAAAAAAQAPf/AAABAAAAAAARAPf/AAABAAAAAAASAPf/AAABAAAAAAATAPf/AAABAAAAAAAUAPf/AAABAAAAAAAVAPf/AAABAAAAAAAWAPf/AAABAAAAAAAXAPf/AAACAAAAAAAXAPj/AAACAAEAAAAXAPn/AAACAAEAAAAXAPr/AAACAAEAAAAXAPv/AAACAAEAAAAXAPz/AAACAAEAAAAXAP3/AAACAAEAAAAXAP7/AAACAAEAAAAXAP//AAACAAIAAAAWAP//AAABAAIAAAAVAP//AAABAAIAAAAUAP//AAABAAIAAAATAP//AAABAAIAAAASAP//AAABAAIAAAARAP//AAABAAIAAAAQAP//AAABAAIAAAAPAP//AAABAAIAAAAOAP//AAABAAIAAAANAP//AAABAAIAAAAMAP//AAABAAIAAAALAP//AAABAAIAAAAKAP//AAABAAIAAAAJAP//AAABAAIAAAAJAPj/AAABAAEAAAAKAPj/AAABAAIAAAALAPj/AAABAAIAAAAMAPj/AAABAAIAAAANAPj/AAABAAIAAAAOAPj/AAABAAIAAAAPAPj/AAABAAIAAAAQAPj/AAABAAIAAAARAPj/AAABAAIAAAASAPj/AAABAAIAAAATAPj/AAABAAIAAAAUAPj/AAABAAIAAAAVAPj/AAABAAIAAAAWAPj/AAABAAEAAAAWAPn/AAAAAAEAAAAWAPr/AAAAAAEAAAAWAPv/AAAAAAEAAAAWAPz/AAAAAAEAAAAWAP3/AAAAAAEAAAAWAP7/AAABAAEAAAAVAP7/AAABAAAAAAAUAP7/AAABAAAAAAATAP7/AAABAAAAAAASAP7/AAABAAAAAAARAP7/AAABAAAAAAAQAP7/AAABAAAAAAAPAP7/AAABAAAAAAAOAP7/AAABAAAAAAANAP7/AAABAAAAAAAMAP7/AAABAAAAAAALAP7/AAABAAAAAAAKAP7/AAABAAAAAAAJAP7/AAABAAEAAAAJAP3/AAACAAEAAAAJAPz/AAACAAEAAAAJAPv/AAACAAEAAAAJAPr/AAACAAEAAAAJAPn/AAACAAEAAAA=")
+tile_set = ExtResource("3_alpks")
