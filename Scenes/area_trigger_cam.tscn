@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://6dg32brmexr4"]
+
+[ext_resource type="Script" uid="uid://b50airg8kjh8m" path="res://Scripts/area_trigger_cam.gd" id="1"]
+
+[node name="AreaTriggerCam" type="Area2D" unique_id=2000501060]
+script = ExtResource("1")
+metadata/_edit_group_ = true
