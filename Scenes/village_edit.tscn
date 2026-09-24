@@ -3,10 +3,12 @@
 [ext_resource type="TileSet" uid="uid://13migque3x0l" path="res://Data/village_tileset.tres" id="1"]
 [ext_resource type="Texture2D" uid="uid://cggvyjgsb7vu4" path="res://Asset/Cursed Fishing Village/Cursed Fishing Village/Background.png" id="1_bxs83"]
 [ext_resource type="PackedScene" uid="uid://dd67ne2jmq6fi" path="res://Scenes/player.tscn" id="2"]
-[ext_resource type="Script" path="res://Scripts/scene_portal.gd" id="4"]
-[ext_resource type="PackedScene" path="res://Scenes/npc.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://cve7culm1oyd" path="res://Scenes/npc.tscn" id="3"]
 [ext_resource type="Texture2D" uid="uid://d2tfvxgwf27ji" path="res://Asset/Cursed Fishing Village/Cursed Fishing Village/Props.png" id="3_31vq1"]
+[ext_resource type="Script" uid="uid://bkugw64w766h" path="res://Scripts/scene_portal.gd" id="4"]
 [ext_resource type="Texture2D" uid="uid://b1lrbn5fhixxg" path="res://Asset/Cursed Fishing Village/Cursed Fishing Village/Enviroment.png" id="4_3sycu"]
+[ext_resource type="PackedScene" uid="uid://6dg32brmexr4" path="res://Scenes/area_trigger_cam.tscn" id="8_8mwii"]
+[ext_resource type="Shape2D" uid="uid://ft4i74piq4ls" path="res://Scenes/TriggerShape.tres" id="9_ewfgf"]
 
 [sub_resource type="RectangleShape2D" id="floor"]
 size = Vector2(1135, 65)
@@ -59,18 +61,23 @@ layer = -2
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -32.0
+offset_bottom = -32.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_bxs83")
 expand_mode = 1
 stretch_mode = 6
+metadata/_edit_use_anchors_ = true
 
 [node name="Ground" type="TileMapLayer" parent="." unique_id=1666801223]
 z_index = 1
+position = Vector2(0, -32)
 tile_map_data = PackedByteArray("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AAADAAEAAAABAAYAAAADAAIAAAABAAYAAAAEAAEAAAABAAYAAAAEAAIAAAABAAYAAAAFAAEAAAABAAYAAAAFAAIAAAABAAYAAAAGAAEAAAABAAYAAAAGAAIAAAABAAYAAAAHAAEAAAABAAYAAAAHAAIAAAABAAYAAAAIAAEAAAABAAYAAAAIAAIAAAABAAYAAAAJAAEAAAABAAYAAAAJAAIAAAABAAYAAAAKAAEAAAABAAYAAAAKAAIAAAABAAYAAAALAAEAAAABAAYAAAALAAIAAAABAAYAAAAMAAEAAAABAAYAAAAMAAIAAAABAAYAAAANAAEAAAABAAYAAAANAAIAAAABAAYAAAAOAAEAAAABAAYAAAAOAAIAAAABAAYAAAAPAAEAAAABAAYAAAAPAAIAAAABAAYAAAAQAAEAAAABAAYAAAAQAAIAAAABAAYAAAARAAEAAAABAAYAAAARAAIAAAABAAYAAAASAAEAAAABAAYAAAASAAIAAAABAAYAAAATAAEAAAABAAYAAAATAAIAAAABAAYAAAAUAAEAAAABAAYAAAAUAAIAAAABAAYAAAAVAAEAAAABAAYAAAAVAAIAAAABAAYAAAAWAAEAAAABAAYAAAAWAAIAAAABAAYAAAAXAAEAAAABAAYAAAAXAAIAAAABAAYAAAAYAAEAAAABAAYAAAAYAAIAAAABAAYAAAAZAAEAAAABAAYAAAAZAAIAAAABAAYAAAAaAAEAAAABAAYAAAAaAAIAAAABAAYAAAAbAAEAAAABAAYAAAAbAAIAAAABAAYAAAAcAAEAAAABAAYAAAAcAAIAAAABAAYAAAAdAAEAAAABAAYAAAAdAAIAAAABAAYAAAAeAAEAAAABAAYAAAAeAAIAAAABAAYAAAAfAAEAAAABAAYAAAAfAAIAAAABAAYAAAAgAAEAAAABAAYAAAAgAAIAAAABAAYAAAAhAAEAAAABAAYAAAAhAAIAAAABAAYAAAAiAAEAAAABAAYAAAAiAAIAAAABAAYAAAAjAAEAAAABAAYAAAAjAAIAAAABAAYAAAAkAAEAAAABAAYAAAAkAAIAAAABAAYAAAAlAAEAAAABAAYAAAAlAAIAAAABAAYAAAAmAAEAAAABAAYAAAAmAAIAAAABAAYAAAAnAAEAAAABAAYAAAAnAAIAAAABAAYAAAAoAAEAAAABAAYAAAAoAAIAAAABAAYAAAApAAEAAAABAAYAAAApAAIAAAABAAYAAAAqAAEAAAABAAYAAAAqAAIAAAABAAYAAAArAAEAAAABAAYAAAArAAIAAAABAAYAAAAsAAEAAAABAAYAAAAsAAIAAAABAAYAAAAtAAEAAAABAAYAAAAtAAIAAAABAAYAAAAuAAEAAAABAAYAAAAuAAIAAAABAAYAAAAvAAEAAAABAAYAAAAvAAIAAAABAAYAAAAwAAEAAAABAAYAAAAwAAIAAAABAAYAAAAxAAEAAAABAAYAAAAxAAIAAAABAAYAAAAyAAEAAAABAAYAAAAyAAIAAAABAAYAAAAzAAEAAAABAAYAAAAzAAIAAAABAAYAAAA0AAEAAAABAAYAAAA0AAIAAAABAAYAAAA1AAEAAAABAAYAAAA1AAIAAAABAAYAAAA2AAEAAAABAAYAAAA2AAIAAAABAAYAAAA3AAEAAAABAAYAAAA3AAIAAAABAAYAAAA4AAEAAAABAAYAAAA4AAIAAAABAAYAAAA5AAEAAAABAAYAAAA5AAIAAAABAAYAAAA6AAEAAAABAAYAAAA6AAIAAAABAAYAAAA7AAEAAAABAAYAAAA7AAIAAAABAAYAAAA8AAEAAAABAAYAAAA8AAIAAAABAAYAAAA9AAEAAAABAAYAAAA9AAIAAAABAAYAAAA+AAEAAAABAAYAAAA+AAIAAAABAAYAAAA/AAEAAAABAAYAAAA/AAIAAAABAAYAAABAAAEAAAABAAYAAABAAAIAAAABAAYAAABBAAEAAAABAAYAAABBAAIAAAABAAYAAABCAAEAAAABAAYAAABCAAIAAAABAAYAAABDAAEAAAABAAYAAABDAAIAAAABAAYAAABEAAEAAAABAAYAAABEAAIAAAABAAYAAABFAAEAAAABAAYAAABFAAIAAAABAAYAAAA=")
 tile_set = ExtResource("1")
 
 [node name="GroundCollision" type="StaticBody2D" parent="." unique_id=402717593]
+position = Vector2(0, -32)
 
 [node name="Floor" type="CollisionShape2D" parent="GroundCollision" unique_id=924260673]
 position = Vector2(567.5, 31.5)
@@ -85,16 +92,7 @@ position = Vector2(1126, -110)
 shape = SubResource("west")
 
 [node name="Props" type="Node2D" parent="." unique_id=1556499387]
-
-[node name="NPC1" parent="." instance=ExtResource("3")]
-position = Vector2(350, 0)
-npc_name = "Nelayan"
-dialogue_lines = PackedStringArray("N:Hei, mau kemana kamu malam-malam begini?! Jangan macam-macam ke arah hutan!", "P:aku hanya ingin keluar sebentar saja", "N:Cepatlah kembali ke rumahmu!!")
-
-[node name="NPC2" parent="." instance=ExtResource("3")]
-position = Vector2(850, 0)
-npc_name = "Penduduk Desa"
-dialogue_lines = PackedStringArray("N:Jangan ke arah hutan, apakah kamu tidak tahu berita?!", "P:Huh, berita apa?", "N:seseorang pengembala berkata bahwa dibalik hutan itu banyak hewan yang bentuknya sudah tidak normal lagi!!", "P:(dalam hati) hmm tidak mungkin, aku harus tetap ke hutan mengumpulkan kayu untuk bahan bakar rumahku. Tidak mungkin juga ada hal aneh kalau sebentar ke dalam hutan kan")
+position = Vector2(0, -32)
 
 [node name="Lampu" type="Sprite2D" parent="Props" unique_id=83852081]
 position = Vector2(49, -35)
@@ -221,20 +219,101 @@ position = Vector2(756, -24)
 scale = Vector2(2.0227273, 2.173913)
 texture = SubResource("AtlasTexture_xkrm3")
 
-[node name="Player" parent="." unique_id=1956118412 instance=ExtResource("2")]
-position = Vector2(120, -41)
+[node name="NPC1" parent="." unique_id=1187682011 instance=ExtResource("3")]
+position = Vector2(350, -32)
+npc_name = "Nelayan"
 
-[node name="Camera2D" parent="Player"]
-limit_right = 1135
+[node name="NPC2" parent="." unique_id=661444933 instance=ExtResource("3")]
+position = Vector2(850, -32)
+npc_name = "Penduduk Desa"
+
+[node name="Player" parent="." unique_id=1956118412 instance=ExtResource("2")]
+position = Vector2(120, -73)
 
 [node name="ExitArea" type="Area2D" parent="." unique_id=1209320996]
-position = Vector2(2320, -50)
+position = Vector2(2320, -82)
 script = ExtResource("4")
 target_scene = "res://Scenes/forest_01.tscn"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitArea" unique_id=368846164]
-position = Vector2(-1227, -16)
+position = Vector2(-1193, -16)
 shape = SubResource("exit")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=892898835]
+position = Vector2(0, -32)
 color = Color(0.5003978, 0.4706686, 0.41860053, 1)
+
+[node name="Node" type="Node" parent="." unique_id=676570046]
+
+[node name="AreaTriggerCam" parent="Node" unique_id=2000501060 instance=ExtResource("8_8mwii")]
+position = Vector2(252, -65)
+trigger_once = false
+camera_path = NodePath("../../CameraRoom")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/AreaTriggerCam" unique_id=1454833080]
+shape = ExtResource("9_ewfgf")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Node/AreaTriggerCam" unique_id=823445101]
+position = Vector2(-248, 0)
+shape = ExtResource("9_ewfgf")
+
+[node name="AreaTriggerCam2" parent="Node" unique_id=1743118553 instance=ExtResource("8_8mwii")]
+position = Vector2(508, -65)
+target_camera_position = Vector2(256, 0)
+trigger_once = false
+camera_path = NodePath("../../CameraRoom")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/AreaTriggerCam2" unique_id=1221757753]
+shape = ExtResource("9_ewfgf")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Node/AreaTriggerCam2" unique_id=2071011872]
+position = Vector2(-248, 0)
+shape = ExtResource("9_ewfgf")
+
+[node name="AreaTriggerCam3" parent="Node" unique_id=30963169 instance=ExtResource("8_8mwii")]
+position = Vector2(764, -65)
+target_camera_position = Vector2(512, 0)
+trigger_once = false
+camera_path = NodePath("../../CameraRoom")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/AreaTriggerCam3" unique_id=851592189]
+shape = ExtResource("9_ewfgf")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Node/AreaTriggerCam3" unique_id=1296861765]
+position = Vector2(-248, 0)
+shape = ExtResource("9_ewfgf")
+
+[node name="AreaTriggerCam4" parent="Node" unique_id=799987383 instance=ExtResource("8_8mwii")]
+position = Vector2(1020, -65)
+target_camera_position = Vector2(768, 0)
+trigger_once = false
+camera_path = NodePath("../../CameraRoom")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/AreaTriggerCam4" unique_id=1763844035]
+shape = ExtResource("9_ewfgf")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Node/AreaTriggerCam4" unique_id=1171704236]
+position = Vector2(-248, 0)
+shape = ExtResource("9_ewfgf")
+
+[node name="AreaTriggerCam5" parent="Node" unique_id=1641555634 instance=ExtResource("8_8mwii")]
+position = Vector2(1276, -65)
+target_camera_position = Vector2(1024, 0)
+trigger_once = false
+camera_path = NodePath("../../CameraRoom")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/AreaTriggerCam5" unique_id=761426716]
+shape = ExtResource("9_ewfgf")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Node/AreaTriggerCam5" unique_id=1677807019]
+position = Vector2(-248, 0)
+shape = ExtResource("9_ewfgf")
+
+[node name="CameraRoom" type="Camera2D" parent="." unique_id=1108013419 groups=["room_camera"]]
+offset = Vector2(128, -72)
+zoom = Vector2(1.876, 1.876)
+limit_enabled = false
+limit_left = 0
+limit_top = -400
+limit_bottom = 200
+limit_smoothed = true

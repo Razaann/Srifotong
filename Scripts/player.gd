@@ -5,7 +5,7 @@ class_name Player
 ## Kiri-kanan cukup flip_h (sprite menghadap kanan).
 
 @export var speed := 140.0
-@export var jump_force := -320.0
+@export var jump_force := -300.0
 @export var gravity := 900.0
 @export var intro_lines: PackedStringArray = ["Sudah malam, persediaan kayuku sudah mau habis", "Aku harus segera ke hutan untuk mencari kayu"]
 
