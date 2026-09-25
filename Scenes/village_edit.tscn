@@ -8,7 +8,6 @@
 [ext_resource type="Script" uid="uid://bkugw64w766h" path="res://Scripts/scene_portal.gd" id="4"]
 [ext_resource type="Texture2D" uid="uid://b1lrbn5fhixxg" path="res://Asset/Cursed Fishing Village/Cursed Fishing Village/Enviroment.png" id="4_3sycu"]
 [ext_resource type="PackedScene" uid="uid://6dg32brmexr4" path="res://Scenes/area_trigger_cam.tscn" id="8_8mwii"]
-[ext_resource type="Shape2D" uid="uid://ft4i74piq4ls" path="res://Scenes/TriggerShape.tres" id="9_ewfgf"]
 
 [sub_resource type="RectangleShape2D" id="floor"]
 size = Vector2(1135, 65)
@@ -246,68 +245,33 @@ color = Color(0.5003978, 0.4706686, 0.41860053, 1)
 [node name="Node" type="Node" parent="." unique_id=676570046]
 
 [node name="AreaTriggerCam" parent="Node" unique_id=2000501060 instance=ExtResource("8_8mwii")]
-position = Vector2(252, -65)
+position = Vector2(128, -72)
 trigger_once = false
 camera_path = NodePath("../../CameraRoom")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/AreaTriggerCam" unique_id=1454833080]
-shape = ExtResource("9_ewfgf")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Node/AreaTriggerCam" unique_id=823445101]
-position = Vector2(-248, 0)
-shape = ExtResource("9_ewfgf")
-
 [node name="AreaTriggerCam2" parent="Node" unique_id=1743118553 instance=ExtResource("8_8mwii")]
-position = Vector2(508, -65)
+position = Vector2(384, -72)
 target_camera_position = Vector2(256, 0)
 trigger_once = false
 camera_path = NodePath("../../CameraRoom")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/AreaTriggerCam2" unique_id=1221757753]
-shape = ExtResource("9_ewfgf")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Node/AreaTriggerCam2" unique_id=2071011872]
-position = Vector2(-248, 0)
-shape = ExtResource("9_ewfgf")
-
 [node name="AreaTriggerCam3" parent="Node" unique_id=30963169 instance=ExtResource("8_8mwii")]
-position = Vector2(764, -65)
+position = Vector2(640, -72)
 target_camera_position = Vector2(512, 0)
 trigger_once = false
 camera_path = NodePath("../../CameraRoom")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/AreaTriggerCam3" unique_id=851592189]
-shape = ExtResource("9_ewfgf")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Node/AreaTriggerCam3" unique_id=1296861765]
-position = Vector2(-248, 0)
-shape = ExtResource("9_ewfgf")
-
 [node name="AreaTriggerCam4" parent="Node" unique_id=799987383 instance=ExtResource("8_8mwii")]
-position = Vector2(1020, -65)
+position = Vector2(896, -72)
 target_camera_position = Vector2(768, 0)
 trigger_once = false
 camera_path = NodePath("../../CameraRoom")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/AreaTriggerCam4" unique_id=1763844035]
-shape = ExtResource("9_ewfgf")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Node/AreaTriggerCam4" unique_id=1171704236]
-position = Vector2(-248, 0)
-shape = ExtResource("9_ewfgf")
-
 [node name="AreaTriggerCam5" parent="Node" unique_id=1641555634 instance=ExtResource("8_8mwii")]
-position = Vector2(1276, -65)
+position = Vector2(1152, -72)
 target_camera_position = Vector2(1024, 0)
 trigger_once = false
 camera_path = NodePath("../../CameraRoom")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/AreaTriggerCam5" unique_id=761426716]
-shape = ExtResource("9_ewfgf")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Node/AreaTriggerCam5" unique_id=1677807019]
-position = Vector2(-248, 0)
-shape = ExtResource("9_ewfgf")
 
 [node name="CameraRoom" type="Camera2D" parent="." unique_id=1108013419 groups=["room_camera"]]
 offset = Vector2(128, -72)

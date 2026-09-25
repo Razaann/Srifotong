@@ -1,7 +1,26 @@
 [gd_scene format=3 uid="uid://6dg32brmexr4"]
 
 [ext_resource type="Script" uid="uid://b50airg8kjh8m" path="res://Scripts/area_trigger_cam.gd" id="1"]
+[ext_resource type="Shape2D" uid="uid://cohkyear5d4r2" path="res://Scenes/2TriggerShape.tres" id="2_hux14"]
+[ext_resource type="Shape2D" uid="uid://ft4i74piq4ls" path="res://Scenes/TriggerShape.tres" id="3_gljbm"]
 
 [node name="AreaTriggerCam" type="Area2D" unique_id=2000501060]
 script = ExtResource("1")
-metadata/_edit_group_ = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=466031262]
+position = Vector2(3.0517578e-05, 68)
+rotation = 1.5707964
+shape = ExtResource("2_hux14")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="." unique_id=1787728805]
+position = Vector2(3.0517578e-05, -68)
+rotation = 1.5707964
+shape = ExtResource("2_hux14")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="." unique_id=1573586341]
+position = Vector2(-124, 0)
+shape = ExtResource("3_gljbm")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="." unique_id=2013943967]
+position = Vector2(124, 0)
+shape = ExtResource("3_gljbm")
