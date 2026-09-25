@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://bn8be7dj3mkgv"]
+
+[ext_resource type="Texture2D" uid="uid://e8xwxxqqqfys" path="res://Asset/16x16 Pixel art Platformer 2D Assets/Pixel art Assets Itch.io/Enemies/Namosa/Namosa-Sheet.png" id="1_k8cip"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ux6q3"]
+radius = 8.0
+height = 20.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kseik"]
+atlas = ExtResource("1_k8cip")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g1jxp"]
+atlas = ExtResource("1_k8cip")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jagd2"]
+atlas = ExtResource("1_k8cip")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8qr5r"]
+atlas = ExtResource("1_k8cip")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1dqh7"]
+atlas = ExtResource("1_k8cip")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sg2pi"]
+atlas = ExtResource("1_k8cip")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k85a1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kseik")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g1jxp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jagd2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8qr5r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1dqh7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sg2pi")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 9.0
+}]
+
+[node name="EnemyFly" type="CharacterBody2D" unique_id=189253759]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=696141033]
+shape = SubResource("CapsuleShape2D_ux6q3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=60999827]
+sprite_frames = SubResource("SpriteFrames_k85a1")
+autoplay = "default"
+frame = 4
+frame_progress = 0.17177159
