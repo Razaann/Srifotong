@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://bn8be7dj3mkgv"]
 
 [ext_resource type="Texture2D" uid="uid://e8xwxxqqqfys" path="res://Asset/16x16 Pixel art Platformer 2D Assets/Pixel art Assets Itch.io/Enemies/Namosa/Namosa-Sheet.png" id="1_k8cip"]
+[ext_resource type="Script" path="res://Scripts/enemy_fly.gd" id="s_fly"]
+[ext_resource type="Script" path="res://Scripts/hurt_area.gd" id="s_hurt"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ux6q3"]
 radius = 6.0
@@ -60,7 +62,14 @@ animations = [{
 radius = 8.0
 height = 20.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hit"]
+radius = 10.0
+height = 22.0
+
 [node name="EnemyFly" type="CharacterBody2D" unique_id=189253759 groups=["Enemies"]]
+script = ExtResource("s_fly")
+max_hp = 1
+contact_damage = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=696141033]
 shape = SubResource("CapsuleShape2D_ux6q3")
@@ -71,7 +80,14 @@ autoplay = "default"
 frame_progress = 0.8193039
 
 [node name="HurtArea" type="Area2D" parent="." unique_id=1560292368]
+script = ExtResource("s_hurt")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtArea" unique_id=1065838517]
 shape = SubResource("CapsuleShape2D_k85a1")
 debug_color = Color(0.97230154, 0, 0.44529122, 0.41960785)
+
+[node name="HitArea" type="Area2D" parent="." unique_id=1065838518]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea" unique_id=1065838519]
+shape = SubResource("CapsuleShape2D_hit")
+debug_color = Color(1, 0.4, 0, 0.35)

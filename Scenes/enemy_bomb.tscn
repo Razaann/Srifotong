@@ -1,11 +1,12 @@
 [gd_scene format=3 uid="uid://m8lnsxi0e8ga"]
 
 [ext_resource type="Texture2D" uid="uid://ce58em8v1ig0u" path="res://Asset/16x16 Pixel art Platformer 2D Assets/Pixel art Assets Itch.io/Enemies/Buraka/Buraka-Sheet.png" id="1_yqyvt"]
-[ext_resource type="Texture2D" uid="uid://dse0csfwkxkdy" path="res://Asset/16x16 Pixel art Platformer 2D Assets/Pixel art Assets Itch.io/Enemies/Buraka/DirtBall.png" id="2_ia1lr"]
+[ext_resource type="Script" uid="uid://b3o7p51mue06p" path="res://Scripts/enemy_bomb.gd" id="s_bomb"]
+[ext_resource type="Script" uid="uid://b28tcs8egflpr" path="res://Scripts/hurt_area.gd" id="s_hurt"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ux6q3"]
 radius = 8.0
-height = 20.0
+height = 17.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ia1lr"]
 atlas = ExtResource("1_yqyvt")
@@ -162,15 +163,25 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_uryp2")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"throw",
 "speed": 8.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ia1lr"]
+radius = 8.0
 height = 20.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hit"]
+radius = 12.0
+height = 28.0
+
+[sub_resource type="CircleShape2D" id="detect"]
+radius = 120.0
+
 [node name="EnemyBomb" type="CharacterBody2D" unique_id=189253759 groups=["Enemies"]]
+script = ExtResource("s_bomb")
+max_hp = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=696141033]
 shape = SubResource("CapsuleShape2D_ux6q3")
@@ -181,14 +192,26 @@ sprite_frames = SubResource("SpriteFrames_k85a1")
 animation = &"throw"
 autoplay = "default"
 frame = 14
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1875272216]
-visible = false
-position = Vector2(-12, 0)
-texture = ExtResource("2_ia1lr")
+frame_progress = 0.21846105
 
 [node name="HurtArea" type="Area2D" parent="." unique_id=2012991954]
+script = ExtResource("s_hurt")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtArea" unique_id=1592795845]
 shape = SubResource("CapsuleShape2D_ia1lr")
 debug_color = Color(0.97230154, 0, 0.44529122, 0.41960785)
+
+[node name="HitArea" type="Area2D" parent="." unique_id=1592795846]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea" unique_id=1592795847]
+shape = SubResource("CapsuleShape2D_hit")
+debug_color = Color(1, 0.4, 0, 0.35)
+
+[node name="Detection" type="Area2D" parent="." unique_id=1592795848]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detection" unique_id=1592795849]
+shape = SubResource("detect")
+debug_color = Color(0.2, 0.8, 1, 0.15)
+
+[node name="Muzzle" type="Marker2D" parent="." unique_id=1592795850]
+position = Vector2(-16, 0)

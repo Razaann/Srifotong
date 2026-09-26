@@ -1,10 +1,12 @@
 [gd_scene format=3 uid="uid://dm1rfswmr0bor"]
 
 [ext_resource type="Texture2D" uid="uid://dicybwsjvgul8" path="res://Asset/16x16 Pixel art Platformer 2D Assets/Pixel art Assets Itch.io/Enemies/EnemyShroom/EnemyShroom-Sheet.png" id="1_wetjl"]
+[ext_resource type="Script" uid="uid://b28tcs8egflpr" path="res://Scripts/hurt_area.gd" id="s_hurt"]
+[ext_resource type="Script" uid="uid://c660jik4vt3k7" path="res://Scripts/enemy_patrol.gd" id="s_patrol"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ux6q3"]
 radius = 8.0
-height = 20.0
+height = 16.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hdwpq"]
 atlas = ExtResource("1_wetjl")
@@ -57,9 +59,15 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wetjl"]
+radius = 8.0
 height = 20.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hit"]
+radius = 12.0
+height = 28.0
+
 [node name="EnemyPatrol" type="CharacterBody2D" unique_id=189253759 groups=["Enemies"]]
+script = ExtResource("s_patrol")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=696141033]
 shape = SubResource("CapsuleShape2D_ux6q3")
@@ -68,11 +76,26 @@ shape = SubResource("CapsuleShape2D_ux6q3")
 sprite_frames = SubResource("SpriteFrames_k85a1")
 animation = &"walk"
 autoplay = "walk"
-frame = 5
-frame_progress = 0.9472693
 
 [node name="HurtArea" type="Area2D" parent="." unique_id=1873171327]
+visible = false
+script = ExtResource("s_hurt")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtArea" unique_id=1523530715]
 shape = SubResource("CapsuleShape2D_wetjl")
 debug_color = Color(0.97230154, 0, 0.44529122, 0.41960785)
+
+[node name="HitArea" type="Area2D" parent="." unique_id=1523530716]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea" unique_id=1523530717]
+shape = SubResource("CapsuleShape2D_hit")
+debug_color = Color(1, 0.4, 0, 0.35)
+
+[node name="WallCheck" type="RayCast2D" parent="." unique_id=1523530718]
+position = Vector2(-6, 0)
+target_position = Vector2(-4, 0)
+
+[node name="LedgeCheck" type="RayCast2D" parent="." unique_id=1523530719]
+position = Vector2(-10, 0)
+target_position = Vector2(0, 14)

@@ -12,6 +12,8 @@ class_name Player
 @export var dash_speed := 320.0
 @export var dash_time := 0.16
 @export var dash_cooldown := 0.5
+@export var max_hp := 3
+@export var invuln_time := 0.8
 @export var intro_lines: PackedStringArray = ["Sudah malam, persediaan kayuku sudah mau habis", "Aku harus segera ke hutan untuk mencari kayu"]
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
@@ -32,8 +34,20 @@ var _dash_dir := 1
 var _ghost_tick := 0.0
 var _fall_speed := 0.0
 var _squash_tween: Tween
+var hp: int
+var _invuln := 0.0
+var _dead := false
+var _swing_id := 0
+var _hit_this_swing: Array = []
+var _trauma := 0.0 ## screen shake energy 0..1, fed by hits
+var _shake_cam: Camera2D
+var _shake_base := Vector2.ZERO
 
 func _ready() -> void:
+	hp = max_hp
+	hitbox.collision_layer = 4
+	hitbox.collision_mask = 8
+	hitbox.area_entered.connect(_on_hitbox_area)
 	anim.animation_finished.connect(_on_animation_finished)
 	_play(&"idle")
 	_play_intro()
@@ -57,6 +71,15 @@ func stop_say() -> void:
 
 func _physics_process(delta: float) -> void:
 	_dash_cd = maxf(0.0, _dash_cd - delta)
+	_invuln = maxf(0.0, _invuln - delta)
+	anim.modulate.a = 0.35 + 0.65 * absf(sin(Time.get_ticks_msec() / 60.0)) if _invuln > 0.0 and not _dead else 1.0
+	if _dead:
+		if not is_on_floor():
+			velocity.y += gravity * delta
+		else:
+			velocity.x = move_toward(velocity.x, 0.0, speed * 8.0 * delta)
+		move_and_slide()
+		return
 	if is_on_floor():
 		_jumps_used = 0
 	var dir := Input.get_axis("move_left", "move_right")
@@ -112,13 +135,37 @@ func _physics_process(delta: float) -> void:
 	else:
 		_play(&"idle")
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	_tick_shake(delta)
 	if not pbubble.visible:
 		return
 	var top: Vector2 = get_global_transform_with_canvas() * Vector2(0, -40)
 	var vsz := get_viewport().get_visible_rect().size
 	pbubble.size = pbubble.get_combined_minimum_size()
 	pbubble.position = Vector2(clampf(top.x - pbubble.size.x * 0.5, 4.0, vsz.x - pbubble.size.x - 4.0), top.y - pbubble.size.y - 4.0)
+
+
+func add_trauma(amount: float) -> void:
+	_trauma = minf(1.0, _trauma + amount)
+
+
+func _tick_shake(delta: float) -> void:
+	if _trauma <= 0.0:
+		return
+	_trauma = maxf(0.0, _trauma - delta * 1.6)
+	var cam := get_viewport().get_camera_2d()
+	if cam == null:
+		_trauma = 0.0
+		return
+	if cam != _shake_cam:
+		_shake_cam = cam
+		_shake_base = cam.offset
+	if _trauma <= 0.0:
+		cam.offset = _shake_base
+		_shake_cam = null
+		return
+	var s := _trauma * _trauma * 14.0
+	cam.offset = _shake_base + Vector2(randf_range(-s, s), randf_range(-s, s))
 
 func _play(name: StringName) -> void:
 	if anim.animation != name:
@@ -240,6 +287,8 @@ func _spawn_ghost() -> void:
 func _start_attack(n: int) -> void:
 	_combo = n
 	_buffered = false
+	_swing_id += 1
+	_hit_this_swing.clear()
 	hitbox.monitoring = true
 	if is_on_floor():
 		velocity.x = 70.0 * _facing # langkah kecil ke depan biar tebasan terasa
@@ -250,7 +299,70 @@ func _end_attack() -> void:
 	_buffered = false
 	hitbox.monitoring = false
 
+func _on_hitbox_area(area: Area2D) -> void:
+	if _combo == 0 or _dead:
+		return
+	if area.owner == self:
+		return # never hit your own HurtArea, even if one gets a damage script later
+	if area.has_method("take_damage") and not _hit_this_swing.has(area.get_instance_id()):
+		_hit_this_swing.append(area.get_instance_id())
+		area.call("take_damage", 1, global_position)
+
+
+func take_damage(dmg: int, from_pos: Vector2) -> void:
+	if _dead or _invuln > 0.0 or _is_dashing:
+		return
+	hp -= dmg
+	_invuln = invuln_time
+	add_trauma(0.55)
+	var push := global_position - from_pos
+	push.y = 0.0
+	if push.length() < 1.0:
+		push = Vector2(float(-_facing), 0.0)
+	velocity = push.normalized() * 180.0 + Vector2(0, -120)
+	if _combo != 0:
+		_end_attack()
+	if hp <= 0:
+		_die()
+	else:
+		_play(&"hurt")
+
+
+func _die() -> void:
+	_dead = true
+	_is_dashing = false
+	hitbox.set_deferred("monitoring", false)
+	_kill_squash_tween()
+	anim.rotation = 0.0
+	anim.scale = Vector2.ONE
+	add_trauma(1.0)
+	# Death anim plays once (~1s); input already locked via _dead.
+	anim.stop()
+	anim.play(&"death")
+	await _fade_to_black(3.0)
+	get_tree().reload_current_scene()
+
+
+func _fade_to_black(duration: float) -> void:
+	var layer := CanvasLayer.new()
+	layer.layer = 100
+	add_child(layer)
+	var rect := ColorRect.new()
+	rect.color = Color(0, 0, 0, 0)
+	rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	layer.add_child(rect)
+	var tw := rect.create_tween()
+	tw.tween_property(rect, "color:a", 1.0, duration)
+	await tw.finished
+
+
 func _on_animation_finished() -> void:
+	if anim.animation == &"death":
+		return # hold last frame under the fade
+	if anim.animation == &"hurt":
+		_play(&"idle")
+		return
 	if anim.animation in [&"attack1", &"attack2", &"attack3", &"attack4"]:
 		if _buffered:
 			_start_attack(_combo % 4 + 1)

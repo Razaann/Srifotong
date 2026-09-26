@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://c0rtd1rtba11x"]
+
+[ext_resource type="Script" path="res://Scripts/dirt_ball.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://dse0csfwkxkdy" path="res://Asset/16x16 Pixel art Platformer 2D Assets/Pixel art Assets Itch.io/Enemies/Buraka/DirtBall.png" id="2"]
+
+[sub_resource type="CircleShape2D" id="ball"]
+radius = 4.0
+
+[node name="DirtBall" type="Area2D"]
+script = ExtResource("1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("ball")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2")

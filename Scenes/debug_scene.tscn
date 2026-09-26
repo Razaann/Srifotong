@@ -1,7 +1,10 @@
 [gd_scene format=4 uid="uid://cuxqq614bn7bn"]
 
 [ext_resource type="TileSet" uid="uid://d2y5k578vn7n8" path="res://Data/forest_tile_set.tres" id="1_kb85k"]
-[ext_resource type="PackedScene" uid="uid://dd67ne2jmq6fi" path="res://Scenes/player.tscn" id="2_ciys7"]
+[ext_resource type="PackedScene" uid="uid://bn8be7dj3mkgv" path="res://Scenes/enemy_fly.tscn" id="2_ciys7"]
+[ext_resource type="PackedScene" uid="uid://m8lnsxi0e8ga" path="res://Scenes/enemy_bomb.tscn" id="3_emu5f"]
+[ext_resource type="PackedScene" uid="uid://dd67ne2jmq6fi" path="res://Scenes/player.tscn" id="4_4w3iw"]
+[ext_resource type="PackedScene" uid="uid://dm1rfswmr0bor" path="res://Scenes/enemy_patrol.tscn" id="5_3pc2c"]
 
 [node name="DebugScene" type="Node2D" unique_id=2141564028]
 
@@ -18,5 +21,14 @@ limit_top = -400
 limit_bottom = 200
 limit_smoothed = true
 
-[node name="Player" parent="." unique_id=522510740 instance=ExtResource("2_ciys7")]
+[node name="EnemyFly" parent="." unique_id=189253759 instance=ExtResource("2_ciys7")]
+position = Vector2(96, -64)
+
+[node name="EnemyBomb" parent="." unique_id=1192954145 instance=ExtResource("3_emu5f")]
 position = Vector2(128, -32)
+
+[node name="Player" parent="." unique_id=522510740 instance=ExtResource("4_4w3iw")]
+position = Vector2(192, -32)
+
+[node name="EnemyPatrol" parent="." unique_id=683067292 instance=ExtResource("5_3pc2c")]
+position = Vector2(32, -32)

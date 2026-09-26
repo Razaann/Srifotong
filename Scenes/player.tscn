@@ -379,6 +379,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="melee"]
 size = Vector2(20, 16)
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k85a1"]
+height = 21.0
+
 [sub_resource type="StyleBoxFlat" id="pbg"]
 content_margin_left = 8.0
 content_margin_top = 6.0
@@ -406,10 +409,8 @@ shape = SubResource("cap")
 texture_filter = 1
 position = Vector2(0, -14)
 sprite_frames = SubResource("sf")
-animation = &"death"
+animation = &"idle"
 autoplay = "idle"
-frame = 7
-frame_progress = 1.0
 
 [node name="MeleeHitbox" type="Area2D" parent="." unique_id=239323842]
 monitoring = false
@@ -418,6 +419,13 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeHitbox" unique_id=100746369]
 position = Vector2(14, -12)
 shape = SubResource("melee")
+
+[node name="HurtArea" type="Area2D" parent="." unique_id=1532653962]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtArea" unique_id=966854058]
+position = Vector2(0, -16)
+shape = SubResource("CapsuleShape2D_k85a1")
+debug_color = Color(0.9590897, 0, 0.52622503, 0.41960785)
 
 [node name="BubbleLayer" type="CanvasLayer" parent="." unique_id=283070195]
 layer = 5
