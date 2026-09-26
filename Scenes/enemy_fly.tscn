@@ -3,8 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://e8xwxxqqqfys" path="res://Asset/16x16 Pixel art Platformer 2D Assets/Pixel art Assets Itch.io/Enemies/Namosa/Namosa-Sheet.png" id="1_k8cip"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ux6q3"]
-radius = 8.0
-height = 20.0
+radius = 6.0
+height = 12.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kseik"]
 atlas = ExtResource("1_k8cip")
@@ -56,7 +56,11 @@ animations = [{
 "speed": 9.0
 }]
 
-[node name="EnemyFly" type="CharacterBody2D" unique_id=189253759]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k85a1"]
+radius = 8.0
+height = 20.0
+
+[node name="EnemyFly" type="CharacterBody2D" unique_id=189253759 groups=["Enemies"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=696141033]
 shape = SubResource("CapsuleShape2D_ux6q3")
@@ -64,5 +68,10 @@ shape = SubResource("CapsuleShape2D_ux6q3")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=60999827]
 sprite_frames = SubResource("SpriteFrames_k85a1")
 autoplay = "default"
-frame = 4
-frame_progress = 0.17177159
+frame_progress = 0.8193039
+
+[node name="HurtArea" type="Area2D" parent="." unique_id=1560292368]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtArea" unique_id=1065838517]
+shape = SubResource("CapsuleShape2D_k85a1")
+debug_color = Color(0.97230154, 0, 0.44529122, 0.41960785)
