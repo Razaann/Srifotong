@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ckdx37yspeyoo" path="res://Scripts/player.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://dviy27d6qgcnl" path="res://Asset/Adventure Character 16x16/Boy_Adventure A.png" id="3_6t5aa"]
+[ext_resource type="FontFile" uid="uid://dhufpm7b8ldml" path="res://Asset/m6x11.ttf" id="3_vgqql"]
 
 [sub_resource type="CapsuleShape2D" id="cap"]
 radius = 4.0
@@ -70,6 +71,58 @@ region = Rect2(288, 288, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_36dho"]
 atlas = ExtResource("3_6t5aa")
 region = Rect2(336, 288, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yh6i2"]
+atlas = ExtResource("3_6t5aa")
+region = Rect2(0, 384, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nv4vc"]
+atlas = ExtResource("3_6t5aa")
+region = Rect2(0, 528, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8gxox"]
+atlas = ExtResource("3_6t5aa")
+region = Rect2(48, 528, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_11gg7"]
+atlas = ExtResource("3_6t5aa")
+region = Rect2(96, 528, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qpa8y"]
+atlas = ExtResource("3_6t5aa")
+region = Rect2(144, 528, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sbwqj"]
+atlas = ExtResource("3_6t5aa")
+region = Rect2(192, 528, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xwi16"]
+atlas = ExtResource("3_6t5aa")
+region = Rect2(240, 528, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sweqm"]
+atlas = ExtResource("3_6t5aa")
+region = Rect2(288, 528, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ph33w"]
+atlas = ExtResource("3_6t5aa")
+region = Rect2(336, 528, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ldla"]
+atlas = ExtResource("3_6t5aa")
+region = Rect2(0, 480, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r7t2e"]
+atlas = ExtResource("3_6t5aa")
+region = Rect2(48, 480, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nmr2m"]
+atlas = ExtResource("3_6t5aa")
+region = Rect2(96, 480, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ax3m3"]
+atlas = ExtResource("3_6t5aa")
+region = Rect2(144, 480, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vgqql"]
 atlas = ExtResource("3_6t5aa")
@@ -207,6 +260,60 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_yh6i2")
+}],
+"loop": 1,
+"name": &"dash",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nv4vc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8gxox")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_11gg7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qpa8y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sbwqj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xwi16")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sweqm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ph33w")
+}],
+"loop": 0,
+"name": &"death",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ldla")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r7t2e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nmr2m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ax3m3")
+}],
+"loop": 0,
+"name": &"hurt",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_vgqql")
 }, {
 "duration": 1.0,
@@ -299,9 +406,9 @@ shape = SubResource("cap")
 texture_filter = 1
 position = Vector2(0, -14)
 sprite_frames = SubResource("sf")
-animation = &"attack4"
+animation = &"death"
 autoplay = "idle"
-frame = 3
+frame = 7
 frame_progress = 1.0
 
 [node name="MeleeHitbox" type="Area2D" parent="." unique_id=239323842]
@@ -327,6 +434,7 @@ layout_mode = 2
 [node name="Name" type="Label" parent="BubbleLayer/Bubble/VBox" unique_id=1818306864]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.15, 0.3, 0.6, 1)
+theme_override_fonts/font = ExtResource("3_vgqql")
 theme_override_font_sizes/font_size = 8
 text = "Pemuda"
 
@@ -334,6 +442,7 @@ text = "Pemuda"
 custom_minimum_size = Vector2(230, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.1, 0.1, 0.15, 1)
+theme_override_fonts/font = ExtResource("3_vgqql")
 theme_override_font_sizes/font_size = 9
 text = "..."
 autowrap_mode = 2

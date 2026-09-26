@@ -232,7 +232,7 @@ position = Vector2(120, -73)
 [node name="ExitArea" type="Area2D" parent="." unique_id=1209320996]
 position = Vector2(2320, -82)
 script = ExtResource("4")
-target_scene = "res://Scenes/forest_01.tscn"
+target_scene = "uid://bfruii4l85lsx"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitArea" unique_id=368846164]
 position = Vector2(-1193, -16)

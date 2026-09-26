@@ -7,6 +7,11 @@ class_name Player
 @export var speed := 140.0
 @export var jump_force := -300.0
 @export var gravity := 900.0
+@export_range(0.0, 1.0) var jump_cut := 0.45 ## velocity kept when jump released early (lower = shorter hop)
+@export var max_jumps := 2 ## set to 2 later for double jump; logic already supports it
+@export var dash_speed := 320.0
+@export var dash_time := 0.16
+@export var dash_cooldown := 0.5
 @export var intro_lines: PackedStringArray = ["Sudah malam, persediaan kayuku sudah mau habis", "Aku harus segera ke hutan untuk mencari kayu"]
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
@@ -19,6 +24,14 @@ class_name Player
 var _combo := 0 # 0 = tidak menyerang, 1 = ayunan 1, 2 = ayunan 2
 var _buffered := false # tombol attack ditekan saat ayunan berjalan -> lanjut combo
 var _facing := 1
+var _jumps_used := 0 # counts jumps since leaving floor; max_jumps=2 enables double jump later
+var _is_dashing := false
+var _dash_time_left := 0.0
+var _dash_cd := 0.0
+var _dash_dir := 1
+var _ghost_tick := 0.0
+var _fall_speed := 0.0
+var _squash_tween: Tween
 
 func _ready() -> void:
 	anim.animation_finished.connect(_on_animation_finished)
@@ -43,13 +56,32 @@ func stop_say() -> void:
 	pbubble.visible = false
 
 func _physics_process(delta: float) -> void:
-	if not is_on_floor():
-		velocity.y += gravity * delta
+	_dash_cd = maxf(0.0, _dash_cd - delta)
+	if is_on_floor():
+		_jumps_used = 0
 	var dir := Input.get_axis("move_left", "move_right")
 	if dir != 0.0:
 		_facing = 1 if dir > 0.0 else -1
 		anim.flip_h = _facing < 0
 		hitshape.position.x = 14.0 * _facing
+	# Start dash: responsive cancel out of attack, works ground + air.
+	if Input.is_action_just_pressed("dash") and not _is_dashing and _dash_cd <= 0.0:
+		_start_dash(dir)
+	if _is_dashing:
+		_dash_time_left -= delta
+		velocity = Vector2(float(_dash_dir) * dash_speed, 0.0)
+		_ghost_tick -= delta
+		if _ghost_tick <= 0.0:
+			_ghost_tick = 0.03
+			_spawn_ghost()
+		move_and_slide()
+		if _dash_time_left <= 0.0:
+			_end_dash()
+		return
+	var was_floor := is_on_floor()
+	_fall_speed = maxf(_fall_speed, velocity.y) if not was_floor else 0.0
+	if not is_on_floor():
+		velocity.y += gravity * delta
 	if Input.is_action_just_pressed("attack"):
 		if _combo == 0:
 			_start_attack(1)
@@ -60,9 +92,17 @@ func _physics_process(delta: float) -> void:
 			velocity.x = move_toward(velocity.x, 0.0, speed * 8.0 * delta)
 	else:
 		velocity.x = dir * speed
-		if Input.is_action_just_pressed("jump") and is_on_floor():
-			velocity.y = jump_force
+		_try_jump()
+	# Variable height: releasing jump early cuts upward velocity.
+	# Full hold = full jump_force height; tap = hop. Works for jump 1 and future double jump.
+	# Guarded against dash so dash velocity is never cut.
+	if Input.is_action_just_released("jump") and velocity.y < 0.0 and not _is_dashing:
+		velocity.y *= jump_cut
 	move_and_slide()
+	# Landing: squash + dust scaled by fall speed. Heavy fall = bigger squash + more dust.
+	if not was_floor and is_on_floor():
+		_play_land_squash(_fall_speed)
+		_fall_speed = 0.0
 	if _combo != 0:
 		return
 	if not is_on_floor():
@@ -83,6 +123,119 @@ func _process(_delta: float) -> void:
 func _play(name: StringName) -> void:
 	if anim.animation != name:
 		anim.play(name)
+
+func _try_jump() -> void:
+	if not Input.is_action_just_pressed("jump"):
+		return
+	if is_on_floor():
+		_jumps_used = 0
+	if _jumps_used >= max_jumps:
+		return
+	var air_jump := not is_on_floor()
+	_jumps_used += 1
+	velocity.y = jump_force
+	_play_jump_stretch(air_jump)
+
+func _kill_squash_tween() -> void:
+	if _squash_tween and _squash_tween.is_valid():
+		_squash_tween.kill()
+	_squash_tween = null
+
+func _play_jump_stretch(air_jump: bool) -> void:
+	# Takeoff: tall stretch + dust ring at feet. Air jump gets extra pop + flip flick.
+	if _is_dashing:
+		return
+	_kill_squash_tween()
+	anim.scale = Vector2(0.75, 1.35) if not air_jump else Vector2(0.7, 1.4)
+	_spawn_dust(5 if not air_jump else 7, 26.0)
+	_squash_tween = create_tween()
+	_squash_tween.tween_property(anim, "scale", Vector2.ONE, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	if air_jump:
+		# Quick spin-flick so double jump (later) reads clearly even with same sprite.
+		var tw := create_tween()
+		tw.tween_property(anim, "rotation", float(_facing) * TAU, 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		tw.tween_callback(func() -> void: anim.rotation = 0.0)
+
+func _play_land_squash(fall_speed: float) -> void:
+	if _is_dashing:
+		return
+	# Ignore tiny step-offs; scale squash with impact.
+	if fall_speed < 120.0:
+		return
+	var strength := clampf(fall_speed / 900.0, 0.35, 1.0)
+	_kill_squash_tween()
+	anim.scale = Vector2(1.0 + 0.35 * strength, 1.0 - 0.3 * strength)
+	_spawn_dust(int(4.0 + 6.0 * strength), 20.0 + 30.0 * strength)
+	_squash_tween = create_tween()
+	_squash_tween.tween_property(anim, "scale", Vector2.ONE, 0.16).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+func _spawn_dust(count: int, power: float) -> void:
+	var tex: Texture2D = anim.sprite_frames.get_frame_texture(anim.animation, anim.frame)
+	var feet := global_position + Vector2(0, -2)
+	for i in count:
+		var side := -1.0 if i % 2 == 0 else 1.0
+		var puff := Sprite2D.new()
+		if tex != null:
+			puff.texture = tex
+			puff.scale = Vector2(0.25, 0.25)
+		puff.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		get_parent().add_child(puff)
+		puff.global_position = feet + Vector2(randf_range(-4.0, 4.0), randf_range(-2.0, 0.0))
+		puff.modulate = Color(0.95, 0.95, 0.9, 0.55)
+		var target := puff.global_position + Vector2(side * randf_range(power * 0.5, power), randf_range(-power * 0.7, -power * 0.2))
+		var tw := puff.create_tween()
+		tw.set_parallel(true)
+		tw.tween_property(puff, "global_position", target, 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		tw.tween_property(puff, "modulate:a", 0.0, 0.3)
+		tw.tween_property(puff, "scale", Vector2(0.12, 0.12), 0.3)
+		tw.chain().tween_callback(puff.queue_free)
+
+func _start_dash(dir: float) -> void:
+	_is_dashing = true
+	_dash_time_left = dash_time
+	_dash_cd = dash_cooldown
+	_dash_dir = int(signf(dir)) if dir != 0.0 else _facing
+	_facing = _dash_dir
+	anim.flip_h = _facing < 0
+	hitshape.position.x = 14.0 * _facing
+	if _combo != 0:
+		_end_attack()
+	# Stretch along dash axis — reads as speed on pixel sprite.
+	_kill_squash_tween()
+	anim.rotation = 0.0
+	anim.scale = Vector2(1.3, 0.7)
+	_ghost_tick = 0.0
+	_spawn_ghost()
+
+func _end_dash() -> void:
+	_is_dashing = false
+	velocity.x = float(_dash_dir) * speed * 0.5
+	velocity.y = minf(velocity.y, 0.0)
+	# Squash-then-recover so dash end has weight.
+	_kill_squash_tween()
+	anim.scale = Vector2(0.8, 1.25)
+	_squash_tween = create_tween()
+	_squash_tween.tween_property(anim, "scale", Vector2.ONE, 0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+func _spawn_ghost() -> void:
+	# Afterimage fade: snapshot current frame, fade out, free. No assets needed.
+	var tex: Texture2D = anim.sprite_frames.get_frame_texture(anim.animation, anim.frame)
+	if tex == null:
+		return
+	var ghost := Sprite2D.new()
+	ghost.texture = tex
+	ghost.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	ghost.show_behind_parent = true
+	get_parent().add_child(ghost)
+	ghost.global_position = anim.global_position
+	ghost.flip_h = anim.flip_h
+	ghost.scale = anim.scale
+	ghost.modulate = Color(0.7, 0.9, 1.0, 0.5)
+	var tw := ghost.create_tween()
+	tw.set_parallel(true)
+	tw.tween_property(ghost, "modulate:a", 0.0, 0.25)
+	tw.tween_property(ghost, "global_position:x", ghost.global_position.x - float(_dash_dir) * 12.0, 0.25)
+	tw.chain().tween_callback(ghost.queue_free)
 
 func _start_attack(n: int) -> void:
 	_combo = n

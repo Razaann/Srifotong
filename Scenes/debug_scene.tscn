@@ -1,0 +1,22 @@
+[gd_scene format=4 uid="uid://cuxqq614bn7bn"]
+
+[ext_resource type="TileSet" uid="uid://d2y5k578vn7n8" path="res://Data/forest_tile_set.tres" id="1_kb85k"]
+[ext_resource type="PackedScene" uid="uid://dd67ne2jmq6fi" path="res://Scenes/player.tscn" id="2_ciys7"]
+
+[node name="DebugScene" type="Node2D" unique_id=2141564028]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1762211048]
+tile_map_data = PackedByteArray("AAAPAP//AAAHAAMAAAAOAP//AAABAAMAAAANAP//AAABAAMAAAAMAP//AAABAAMAAAALAP//AAABAAMAAAAKAP//AAABAAMAAAAJAP//AAABAAMAAAAIAP//AAABAAMAAAAHAP//AAABAAMAAAAGAP//AAABAAMAAAAFAP//AAABAAMAAAAEAP//AAABAAMAAAADAP//AAABAAMAAAACAP//AAABAAMAAAABAP//AAABAAMAAAAAAP//AAAEAAMAAAAPAP7/AAADAAEAAAAPAP3/AAADAAEAAAAPAPz/AAADAAEAAAAPAPv/AAADAAEAAAAPAPr/AAADAAEAAAAPAPn/AAADAAEAAAAPAPj/AAADAAEAAAAPAPf/AAAHAAAAAAAOAPf/AAABAAMAAAANAPf/AAABAAMAAAAMAPf/AAABAAMAAAALAPf/AAABAAMAAAAKAPf/AAABAAMAAAAJAPf/AAABAAMAAAAIAPf/AAABAAMAAAAHAPf/AAABAAMAAAAGAPf/AAABAAMAAAAFAPf/AAABAAMAAAAEAPf/AAABAAMAAAADAPf/AAABAAMAAAACAPf/AAABAAMAAAABAPf/AAABAAMAAAAAAPf/AAAEAAAAAAAAAP7/AAADAAEAAAAAAP3/AAADAAEAAAAAAPz/AAADAAEAAAAAAPv/AAADAAEAAAAAAPr/AAADAAEAAAAAAPn/AAADAAEAAAAAAPj/AAADAAEAAAA=")
+tile_set = ExtResource("1_kb85k")
+
+[node name="CameraRoom" type="Camera2D" parent="." unique_id=705683231 groups=["room_camera"]]
+offset = Vector2(128, -72)
+zoom = Vector2(1.876, 1.876)
+limit_enabled = false
+limit_left = 0
+limit_top = -400
+limit_bottom = 200
+limit_smoothed = true
+
+[node name="Player" parent="." unique_id=522510740 instance=ExtResource("2_ciys7")]
+position = Vector2(128, -32)
