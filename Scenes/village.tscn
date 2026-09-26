@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" path="res://Scripts/village.gd" id="1"]
 [ext_resource type="PackedScene" path="res://Scenes/player.tscn" id="2"]
+[ext_resource type="AudioStream" path="res://Asset/Musik/5- Punto de retorno.wav" id="mus_wav"]
+[ext_resource type="Script" path="res://Scripts/music_player.gd" id="mus_gd"]
 
 [sub_resource type="RectangleShape2D" id="floor"]
 size = Vector2(2400, 64)
@@ -13,6 +15,11 @@ size = Vector2(16, 240)
 size = Vector2(80, 140)
 
 [node name="Village" type="Node2D" unique_id=160277196]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("mus_wav")
+volume_db = 12.0
+script = ExtResource("mus_gd")
 script = ExtResource("1")
 
 [node name="Back" type="Node2D" parent="." unique_id=1908137489]

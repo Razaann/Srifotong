@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://bq6p7mj0dnoic"]
+
+[ext_resource type="Texture2D" uid="uid://d34d1hhm5gw7i" path="res://Asset/Butter/I4L_Butterfly_Sprite256x64(64) green.png" id="1_3cdaq"]
+[ext_resource type="Texture2D" uid="uid://djrhldtwfqadx" path="res://Asset/16x16 Pixel art Platformer 2D Assets/Pixel art Assets Itch.io/DeathCirclesPlayer/WhiteCirclesDeath.png" id="1_jn41r"]
+[ext_resource type="Script" uid="uid://cdvqudhtaqiba" path="res://Scripts/butterfly_ability.gd" id="s_fly"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jn41r"]
+atlas = ExtResource("1_3cdaq")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vdwji"]
+atlas = ExtResource("1_3cdaq")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vnct6"]
+atlas = ExtResource("1_3cdaq")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rathy"]
+atlas = ExtResource("1_3cdaq")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k85a1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jn41r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vdwji")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vnct6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rathy")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 4.0
+}]
+
+[node name="ButterflyAbilitiesJump" type="Node2D" unique_id=428309272]
+script = ExtResource("s_fly")
+ability = &"double_jump"
+unlock_text = "Kamu Mendapatkan Lompatan Ganda"
+
+[node name="Bubble" type="Sprite2D" parent="." unique_id=475842631]
+position = Vector2(9.536743e-07, 9.536743e-07)
+scale = Vector2(4, 4)
+texture = ExtResource("1_jn41r")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2112366820]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_k85a1")
+autoplay = "default"
+frame_progress = 0.60217786
+flip_h = true

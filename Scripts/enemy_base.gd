@@ -4,6 +4,9 @@ class_name EnemyBase
 ## Child HurtArea (hurt_area.gd) forwards take_damage() here.
 ## Child HitArea (plain Area2D) damages the Player on body contact.
 
+signal damaged(hp: int, max_hp: int)
+signal died
+
 @export var max_hp := 3
 @export var contact_damage := 1
 @export var contact_cooldown := 1.0 ## re-hit delay while player stays in contact
@@ -26,6 +29,8 @@ func take_damage(dmg: int, from_pos: Vector2) -> void:
 	if _dead:
 		return
 	hp -= dmg
+	Sfx.play(&"enemy_hurt")
+	damaged.emit(hp, max_hp)
 	_flash()
 	var push := global_position - from_pos
 	push.y = 0.0
@@ -39,6 +44,7 @@ func take_damage(dmg: int, from_pos: Vector2) -> void:
 
 func _die() -> void:
 	_dead = true
+	died.emit()
 	_knock = Vector2.ZERO
 	velocity = Vector2.ZERO
 	set_deferred("collision_layer", 0)

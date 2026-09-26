@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://biog1axay4ryx" path="res://Scripts/npc.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://d4bc7kb1q2gxc" path="res://Asset/Adventure Character 16x16/Worker_D.png" id="2"]
+[ext_resource type="FontFile" uid="uid://dhufpm7b8ldml" path="res://Asset/m6x11.ttf" id="3"]
 
 [sub_resource type="CapsuleShape2D" id="cap"]
 radius = 5.0
@@ -125,12 +126,14 @@ layout_mode = 2
 [node name="Name" type="Label" parent="BubbleLayer/Bubble/VBox" unique_id=1289808164]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6, 0.15, 0.1, 1)
+theme_override_fonts/font = ExtResource("3")
 theme_override_font_sizes/font_size = 8
 text = "Warga"
 
 [node name="Text" type="Label" parent="BubbleLayer/Bubble/VBox" unique_id=1379760315]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.1, 0.1, 0.15, 1)
+theme_override_fonts/font = ExtResource("3")
 theme_override_font_sizes/font_size = 9
 custom_minimum_size = Vector2(230, 0)
 text = "..."

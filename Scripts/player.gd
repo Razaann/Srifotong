@@ -4,17 +4,21 @@ class_name Player
 ## Kontrol: A/D atau Panah = jalan, Space = lompat, J/X = attack, E = interaksi.
 ## Kiri-kanan cukup flip_h (sprite menghadap kanan).
 
+signal health_changed(hp: int, max_hp: int)
+
 @export var speed := 140.0
 @export var jump_force := -300.0
 @export var gravity := 900.0
 @export_range(0.0, 1.0) var jump_cut := 0.45 ## velocity kept when jump released early (lower = shorter hop)
-@export var max_jumps := 2 ## set to 2 later for double jump; logic already supports it
+@export var max_jumps := 1 ## set to 2 later for double jump; logic already supports it
 @export var dash_speed := 320.0
 @export var dash_time := 0.16
 @export var dash_cooldown := 0.5
+@export var has_dash := false ## unlock via butterfly bubble; checkbox in Inspector
 @export var max_hp := 3
 @export var invuln_time := 0.8
 @export var intro_lines: PackedStringArray = ["Sudah malam, persediaan kayuku sudah mau habis", "Aku harus segera ke hutan untuk mencari kayu"]
+@export var forest_intro_lines: PackedStringArray = ["Aku berada di mana ini?", "Aku harus cari jalan pulang."]
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hitbox: Area2D = $MeleeHitbox
@@ -42,9 +46,11 @@ var _hit_this_swing: Array = []
 var _trauma := 0.0 ## screen shake energy 0..1, fed by hits
 var _shake_cam: Camera2D
 var _shake_base := Vector2.ZERO
+var control_locked := false ## cinematics (ability unlock) set this; physics falls but no input
 
 func _ready() -> void:
 	hp = max_hp
+	health_changed.emit(hp, max_hp)
 	hitbox.collision_layer = 4
 	hitbox.collision_mask = 8
 	hitbox.area_entered.connect(_on_hitbox_area)
@@ -53,13 +59,28 @@ func _ready() -> void:
 	_play_intro()
 
 func _play_intro() -> void:
-	if intro_lines.is_empty():
+	var here := get_tree().current_scene
+	if here == null:
 		return
+	var path := here.scene_file_path
+	var lines := intro_lines
+	if path == "res://Scenes/village_edit.tscn":
+		lines = intro_lines
+	elif path.get_file().begins_with("forest"):
+		lines = forest_intro_lines
+	else:
+		return
+	if lines.is_empty():
+		return
+	# Monologue owns the input: stand still until it finishes.
+	control_locked = true
 	await get_tree().create_timer(1.0).timeout
-	for line in intro_lines:
+	for line in lines:
 		say(line)
 		await get_tree().create_timer(3.0).timeout
 	stop_say()
+	if not _dead:
+		control_locked = false
 
 func say(text: String, who := "Pemuda") -> void:
 	pname.text = who
@@ -80,6 +101,14 @@ func _physics_process(delta: float) -> void:
 			velocity.x = move_toward(velocity.x, 0.0, speed * 8.0 * delta)
 		move_and_slide()
 		return
+	if control_locked:
+		# Cinematic lock (ability unlock): fall, no input, no attack/dash/jump.
+		if not is_on_floor():
+			velocity.y += gravity * delta
+		else:
+			velocity.x = move_toward(velocity.x, 0.0, speed * 8.0 * delta)
+		move_and_slide()
+		return
 	if is_on_floor():
 		_jumps_used = 0
 	var dir := Input.get_axis("move_left", "move_right")
@@ -87,8 +116,8 @@ func _physics_process(delta: float) -> void:
 		_facing = 1 if dir > 0.0 else -1
 		anim.flip_h = _facing < 0
 		hitshape.position.x = 14.0 * _facing
-	# Start dash: responsive cancel out of attack, works ground + air.
-	if Input.is_action_just_pressed("dash") and not _is_dashing and _dash_cd <= 0.0:
+	# Start dash: responsive cancel out of attack, works ground + air. Locked until unlock.
+	if has_dash and Input.is_action_just_pressed("dash") and not _is_dashing and _dash_cd <= 0.0:
 		_start_dash(dir)
 	if _is_dashing:
 		_dash_time_left -= delta
@@ -126,6 +155,11 @@ func _physics_process(delta: float) -> void:
 	if not was_floor and is_on_floor():
 		_play_land_squash(_fall_speed)
 		_fall_speed = 0.0
+	# Safety net: if the attack anim was interrupted (hurt/dash/death took over
+	# without _end_attack), the combo would lock movement forever. Resync here.
+	# R remains as a manual scene reset via SceneTransition for anything else.
+	if _combo != 0 and anim.animation not in [&"attack1", &"attack2", &"attack3", &"attack4"]:
+		_end_attack()
 	if _combo != 0:
 		return
 	if not is_on_floor():
@@ -167,9 +201,9 @@ func _tick_shake(delta: float) -> void:
 	var s := _trauma * _trauma * 14.0
 	cam.offset = _shake_base + Vector2(randf_range(-s, s), randf_range(-s, s))
 
-func _play(name: StringName) -> void:
-	if anim.animation != name:
-		anim.play(name)
+func _play(anim_name: StringName) -> void:
+	if anim.animation != anim_name:
+		anim.play(anim_name)
 
 func _try_jump() -> void:
 	if not Input.is_action_just_pressed("jump"):
@@ -181,6 +215,7 @@ func _try_jump() -> void:
 	var air_jump := not is_on_floor()
 	_jumps_used += 1
 	velocity.y = jump_force
+	Sfx.play(&"jump")
 	_play_jump_stretch(air_jump)
 
 func _kill_squash_tween() -> void:
@@ -247,6 +282,7 @@ func _start_dash(dir: float) -> void:
 	hitshape.position.x = 14.0 * _facing
 	if _combo != 0:
 		_end_attack()
+	Sfx.play(&"dash")
 	# Stretch along dash axis — reads as speed on pixel sprite.
 	_kill_squash_tween()
 	anim.rotation = 0.0
@@ -290,6 +326,7 @@ func _start_attack(n: int) -> void:
 	_swing_id += 1
 	_hit_this_swing.clear()
 	hitbox.monitoring = true
+	Sfx.play(&"attack")
 	if is_on_floor():
 		velocity.x = 70.0 * _facing # langkah kecil ke depan biar tebasan terasa
 	_play(StringName("attack%d" % n))
@@ -325,7 +362,9 @@ func take_damage(dmg: int, from_pos: Vector2) -> void:
 	if hp <= 0:
 		_die()
 	else:
+		Sfx.play(&"hurt")
 		_play(&"hurt")
+	health_changed.emit(hp, max_hp)
 
 
 func _die() -> void:
@@ -336,6 +375,7 @@ func _die() -> void:
 	anim.rotation = 0.0
 	anim.scale = Vector2.ONE
 	add_trauma(1.0)
+	Sfx.play(&"lose")
 	# Death anim plays once (~1s); input already locked via _dead.
 	anim.stop()
 	anim.play(&"death")

@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://ce58em8v1ig0u" path="res://Asset/16x16 Pixel art Platformer 2D Assets/Pixel art Assets Itch.io/Enemies/Buraka/Buraka-Sheet.png" id="1_yqyvt"]
 [ext_resource type="Script" uid="uid://b3o7p51mue06p" path="res://Scripts/enemy_bomb.gd" id="s_bomb"]
-[ext_resource type="Script" uid="uid://b28tcs8egflpr" path="res://Scripts/hurt_area.gd" id="s_hurt"]
+[ext_resource type="Script" path="res://Scripts/hurt_area.gd" id="s_hurt"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ux6q3"]
 radius = 8.0

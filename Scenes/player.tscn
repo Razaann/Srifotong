@@ -400,6 +400,7 @@ corner_radius_bottom_left = 6
 
 [node name="Player" type="CharacterBody2D" unique_id=522510740 groups=["Player"]]
 script = ExtResource("1")
+max_hp = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=227336137]
 position = Vector2(0, -12)

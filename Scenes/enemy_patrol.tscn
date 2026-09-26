@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dm1rfswmr0bor"]
 
 [ext_resource type="Texture2D" uid="uid://dicybwsjvgul8" path="res://Asset/16x16 Pixel art Platformer 2D Assets/Pixel art Assets Itch.io/Enemies/EnemyShroom/EnemyShroom-Sheet.png" id="1_wetjl"]
-[ext_resource type="Script" uid="uid://b28tcs8egflpr" path="res://Scripts/hurt_area.gd" id="s_hurt"]
+[ext_resource type="Script" path="res://Scripts/hurt_area.gd" id="s_hurt"]
 [ext_resource type="Script" uid="uid://c660jik4vt3k7" path="res://Scripts/enemy_patrol.gd" id="s_patrol"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ux6q3"]

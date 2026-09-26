@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://ifr6xfl0olad"]
+
+[ext_resource type="AudioStream" uid="uid://ca0mmktjb4yvb" path="res://Asset/Musik/1- Zona de descanso.wav" id="1_j2wod"]
+
+[node name="Node2D" type="Node2D" unique_id=111542913]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1681929609]
+stream = ExtResource("1_j2wod")
+autoplay = true

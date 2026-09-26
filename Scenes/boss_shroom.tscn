@@ -1,0 +1,105 @@
+[gd_scene format=3 uid="uid://ry8tpehu2w8s"]
+
+[ext_resource type="Texture2D" uid="uid://ef1ptt80xbdj" path="res://Asset/16x16 Pixel art Platformer 2D Assets/Pixel art Assets Itch.io/Enemies/EnemyShroom/BossShroom-Sheet.png" id="1_ua57c"]
+[ext_resource type="Script" path="res://Scripts/boss_shroom.gd" id="s_boss"]
+[ext_resource type="Script" path="res://Scripts/hurt_area.gd" id="2_tq0c7"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jfwqr"]
+radius = 8.0
+height = 16.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tq0c7"]
+atlas = ExtResource("1_ua57c")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jfwqr"]
+atlas = ExtResource("1_ua57c")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pu5vy"]
+atlas = ExtResource("1_ua57c")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qoppo"]
+atlas = ExtResource("1_ua57c")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m45sa"]
+atlas = ExtResource("1_ua57c")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8nerq"]
+atlas = ExtResource("1_ua57c")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pu5vy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tq0c7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jfwqr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pu5vy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qoppo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m45sa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8nerq")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 9.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qoppo"]
+radius = 8.0
+height = 20.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m45sa"]
+radius = 12.0
+height = 28.0
+
+[node name="BossShroom" type="CharacterBody2D" unique_id=571220244 groups=["Enemies", "Boss"]]
+script = ExtResource("s_boss")
+max_hp = 30
+contact_damage = 1
+knockback_force = 40.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1349975394]
+shape = SubResource("CapsuleShape2D_jfwqr")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1224393323]
+sprite_frames = SubResource("SpriteFrames_pu5vy")
+animation = &"walk"
+autoplay = "walk"
+frame_progress = 0.5994467
+
+[node name="HurtArea" type="Area2D" parent="." unique_id=1114385581]
+visible = false
+script = ExtResource("2_tq0c7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtArea" unique_id=1970740471]
+shape = SubResource("CapsuleShape2D_qoppo")
+debug_color = Color(0.97230154, 0, 0.44529122, 0.41960785)
+
+[node name="HitArea" type="Area2D" parent="." unique_id=1343058509]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea" unique_id=705599992]
+shape = SubResource("CapsuleShape2D_m45sa")
+debug_color = Color(1, 0.4, 0, 0.35)
+
+[node name="WallCheck" type="RayCast2D" parent="." unique_id=194682315]
+position = Vector2(-6, 0)
+target_position = Vector2(-4, 0)
+
+[node name="LedgeCheck" type="RayCast2D" parent="." unique_id=220905761]
+position = Vector2(-10, 0)
+target_position = Vector2(0, 14)

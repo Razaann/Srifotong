@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://Asset/16x16 Pixel art Platformer 2D Assets/Pixel art Assets Itch.io/BG/Map01BG.png" id="sky"]
+[ext_resource type="Texture2D" path="res://Asset/16x16 Pixel art Platformer 2D Assets/Pixel art Assets Itch.io/BG/ForestBGPar.png" id="far"]
+[ext_resource type="Texture2D" path="res://Asset/16x16 Pixel art Platformer 2D Assets/Pixel art Assets Itch.io/BG/MidBGPar.png" id="mid"]
+
+[node name="ForestParallax" type="ParallaxBackground"]
+
+[node name="Sky" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Sky"]
+scale = Vector2(2, 2)
+texture = ExtResource("sky")
+
+[node name="FarTrees" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.3, 0)
+motion_mirroring = Vector2(336, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="FarTrees"]
+position = Vector2(0, -10)
+texture = ExtResource("far")
+
+[node name="MidTrees" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.6, 0)
+motion_mirroring = Vector2(336, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="MidTrees"]
+position = Vector2(0, 40)
+texture = ExtResource("mid")

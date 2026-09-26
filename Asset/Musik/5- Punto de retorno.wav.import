@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b63bpv8lqssh1"
+path="res://.godot/imported/5- Punto de retorno.wav-292d1514dafa15ffe1a8453a0a5c8c1e.sample"
+
+[deps]
+
+source_file="res://Asset/Musik/5- Punto de retorno.wav"
+dest_files=["res://.godot/imported/5- Punto de retorno.wav-292d1514dafa15ffe1a8453a0a5c8c1e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=1
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

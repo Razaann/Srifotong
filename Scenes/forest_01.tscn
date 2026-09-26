@@ -3,11 +3,21 @@
 [ext_resource type="PackedScene" uid="uid://dd67ne2jmq6fi" path="res://Scenes/player.tscn" id="1"]
 [ext_resource type="TileSet" uid="uid://d2y5k578vn7n8" path="res://Data/forest_tile_set.tres" id="3_lq1bh"]
 [ext_resource type="Script" uid="uid://bkugw64w766h" path="res://Scripts/scene_portal.gd" id="5"]
+[ext_resource type="PackedScene" path="res://Scenes/forest_parallax.tscn" id="par"]
+[ext_resource type="AudioStream" path="res://Asset/Musik/1- Zona de descanso.wav" id="mus_wav"]
+[ext_resource type="Script" path="res://Scripts/music_player.gd" id="mus_gd"]
 
 [sub_resource type="RectangleShape2D" id="portal"]
 size = Vector2(60, 120)
 
 [node name="Forest01" type="Node2D" unique_id=885796004]
+
+[node name="ForestParallax" parent="." instance=ExtResource("par")]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("mus_wav")
+volume_db = 12.0
+script = ExtResource("mus_gd")
 
 [node name="Player" parent="." unique_id=1390742821 instance=ExtResource("1")]
 position = Vector2(128, 0)
