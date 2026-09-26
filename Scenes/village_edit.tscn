@@ -1,12 +1,12 @@
 [gd_scene format=4 uid="uid://dfiqllurvpbbe"]
 
 [ext_resource type="TileSet" uid="uid://13migque3x0l" path="res://Data/village_tileset.tres" id="1"]
-[ext_resource type="Texture2D" uid="uid://cggvyjgsb7vu4" path="res://Asset/Cursed Fishing Village/Cursed Fishing Village/Background.png" id="1_bxs83"]
+[ext_resource type="Texture2D" uid="uid://cggvyjgsb7vu4" path="res://Asset/Cursed Fishing Village/Background.png" id="1_bxs83"]
 [ext_resource type="PackedScene" uid="uid://dd67ne2jmq6fi" path="res://Scenes/player.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://cve7culm1oyd" path="res://Scenes/npc.tscn" id="3"]
-[ext_resource type="Texture2D" uid="uid://d2tfvxgwf27ji" path="res://Asset/Cursed Fishing Village/Cursed Fishing Village/Props.png" id="3_31vq1"]
+[ext_resource type="Texture2D" uid="uid://d2tfvxgwf27ji" path="res://Asset/Cursed Fishing Village/Props.png" id="3_31vq1"]
 [ext_resource type="Script" uid="uid://bkugw64w766h" path="res://Scripts/scene_portal.gd" id="4"]
-[ext_resource type="Texture2D" uid="uid://b1lrbn5fhixxg" path="res://Asset/Cursed Fishing Village/Cursed Fishing Village/Enviroment.png" id="4_3sycu"]
+[ext_resource type="Texture2D" uid="uid://b1lrbn5fhixxg" path="res://Asset/Cursed Fishing Village/Enviroment.png" id="4_3sycu"]
 [ext_resource type="PackedScene" uid="uid://6dg32brmexr4" path="res://Scenes/area_trigger_cam.tscn" id="8_8mwii"]
 
 [sub_resource type="RectangleShape2D" id="floor"]

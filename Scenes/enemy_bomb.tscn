@@ -163,7 +163,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"throw",
-"speed": 9.0
+"speed": 8.0
 }]
 
 [node name="EnemyBomb" type="CharacterBody2D" unique_id=189253759]
@@ -173,7 +173,5 @@ shape = SubResource("CapsuleShape2D_ux6q3")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=60999827]
 sprite_frames = SubResource("SpriteFrames_k85a1")
-animation = &"throw"
 autoplay = "default"
-frame = 1
-frame_progress = 0.80794775
+frame_progress = 0.3204312
